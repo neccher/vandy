@@ -1,3 +1,5 @@
+#  reference to https://github.com/bbjornstad/air-pollution-prediction/blob/master/pyaqs.py for the EPA's api function Class
+
 """
 This file contains modules that can be used to fetch the data from the EPA's
 Air Quality Services API. Defines a class that can be used to fetch the data and 
