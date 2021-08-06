@@ -14,3 +14,6 @@ We also set up rules for committing to the main branch.  We need two people to r
 
 ## Presentation
 https://docs.google.com/presentation/d/12ZZ8tHSEL98t1l3y2X2f2KscOECXnUuiChxBJzaTkkk/edit?usp=sharing
+
+## Dashboard Blueprint
+https://docs.google.com/presentation/d/1lOOiaet9RW15AzNBcVKF0n50d5QKsIPhTDCv8gDodxE/edit?usp=sharing
