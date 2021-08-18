@@ -131,13 +131,16 @@ def scrape():
     forecast_df['Precipitation'] = Precips_List_Final
     forecast_df['Humidity'] = Hums_List_Final
 
-        #Removing symbols
+    #Removing symbols
     forecast_df['HighTemps'] = forecast_df['HighTemps'].str.rstrip("°")
     forecast_df['LowTemps'] = forecast_df['LowTemps'].str.rstrip("°")
     forecast_df['Precipitation'] = forecast_df['Precipitation'].str.rstrip("%")
     forecast_df['Humidity'] = forecast_df['Humidity'].str.rstrip("%")
+    
+    #Replacing "--" with 0 if daytime high has expired for the current day
+    forecast_df['HighTemps'].replace(["--"], 0)
 
-      #Converting to out of strings
+    #Converting to out of strings
     forecast_df['HighTemps'] = forecast_df['HighTemps'].astype(float)
     forecast_df['LowTemps'] = forecast_df['LowTemps'].astype(float)
     forecast_df['Winds'] = forecast_df['Winds'].astype(float)
@@ -145,7 +148,7 @@ def scrape():
     forecast_df['Humidity'] = forecast_df['Humidity'].astype(float)
 
     #Converting Precipitation to decimal
-    forecast_df['Precipitation'] = (forecast_df['Precipitation'] / 100)
+    #forecast_df['Precipitation'] = (forecast_df['Precipitation'] / 100)
 
      #Transforming Conditions text to match with model
     forecast_df['Conditions'] = forecast_df['Conditions'].str.replace("Partly Cloudy", "Partially cloudy", case = False)
