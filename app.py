@@ -13,9 +13,11 @@ import tensorflow as tf
 app = Flask(__name__)
 model = tf.keras.models.load_model("weather_aqi.pkl", "rb")
 
+""" model = pickle.load(open("/Users/rdcuy/Documents/VANDY_OLD/templates/weather_aqi.pkl", "wb")) """
+
 @app.route('/')
 def index():    
-    return render_template('AQI.html')
+    return render_template('index.html')
 
 @app.route("/scrape")
 def scrape():
