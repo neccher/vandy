@@ -183,5 +183,10 @@ encode_df.columns = enc.get_feature_names(application_cat)
 forecast_df_final = forecast_df.merge(encode_df, left_index=True,right_index=True)
 forecast_df_final = forecast_df_final.drop(columns = application_cat)
 
+# Drop one of the temp columns
+forecast_df_final = forecast_df_final[['HighTemps', 'Winds', 'Precipitation', 'Humidity', 'Conditions_Partially cloudy', 'Conditions_Rain']]
+forecast_df_final['Temperature'] = forecast_df_final['HighTemps']
+#Drop Low Temps column
+forecast_df_final = forecast_df_final[['Temperature', 'Winds', 'Precipitation', 'Humidity', 'Conditions_Partially cloudy', 'Conditions_Rain']]
 
 
