@@ -189,4 +189,4 @@ forecast_df_final['Temperature'] = forecast_df_final['HighTemps']
 #Drop Low Temps column
 forecast_df_final = forecast_df_final[['Temperature', 'Winds', 'Precipitation', 'Humidity', 'Conditions_Partially cloudy', 'Conditions_Rain']]
 
-
+return forecast_df_final
