@@ -6,7 +6,7 @@
         <meta http-equiv="X-UA-Compatible" content="ie=edge">
         <title>AQI Predictor Final Project</title>
         <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
-        <link rel="stylesheet" href="AQI.css">
+        <link rel="stylesheet" href="/static/AQI.css">
     </head>
     <body>
 
@@ -21,27 +21,16 @@
             <div class="col-md-12 text-center">
               <h2 style="color:white;">Welcome to the AQI predictor. Want to find out what the next day has in store for you? 
               Try our predictor out!</h1>
-              <!-- Add a button to activate scraping script -->
-              <form action="/scraper/" method="post">
-                <button name="predictor" type="submit">Predict</button>
-              </form>
-              
-              <!-- <form method="GET" action="/scraper/">
-                <button type="submit">Predict</button>
-              </form> -->
-              
-              <!-- <p><a class="btn btn-primary btn-lg" href="/scraper" role="button">Get Weather Forecast</a></p> -->
+              <!-- Add a button to activate scraping script -->     
+              <p><a class="btn btn-primary btn-lg" href="/scraper" role="button">Get Weather Forecast</a></p>
             </div>
             <!-- Add section for weather forecast -->
             <div class="row" id="weather-data">
                 <div class="col-md-12">
                     <div class="media">
                         <div class="panel-content">
-                            <p>{{ ScrapingWeather.weather_data }}</p>
-                        </div><div class=".
-                        
-                        +
-                        "></div>
+                            <p>{{ weatherdata | safe }}</p>
+                        </div>
                     </div>
                 </div>
             </div>
