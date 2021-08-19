@@ -22,9 +22,14 @@
               <h2 style="color:white;">Welcome to the AQI predictor. Want to find out what the next day has in store for you? 
               Try our predictor out!</h1>
               <!-- Add a button to activate scraping script -->
-              <form method="GET" action="/scraper">
-                <button type="submit">Predict</button>
+              <form action="/scraper/" method="post">
+                <button name="predictor" type="submit">Predict</button>
               </form>
+              
+              <!-- <form method="GET" action="/scraper/">
+                <button type="submit">Predict</button>
+              </form> -->
+              
               <!-- <p><a class="btn btn-primary btn-lg" href="/scraper" role="button">Get Weather Forecast</a></p> -->
             </div>
             <!-- Add section for weather forecast -->

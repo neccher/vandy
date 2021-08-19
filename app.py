@@ -19,14 +19,14 @@ app = Flask(__name__)
 def index():    
     return render_template('index.html')
 
-@app.route("/scraper")
+@app.route("/scraper/")
 def scraping():
     weatherdata = ScrapingWeather.scrape()
     model = tf.keras.models.load_model("weather_aqi")
     prediction = model.predict(weatherdata)
-    print(prediction)
-    
-    return prediction
+    #print(prediction)
+    return render_template('index.html', prediction=prediction)
+    #return prediction
     """  return redirect('/', code = 302) """
     
 if __name__ == '__main__':
