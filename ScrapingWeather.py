@@ -185,7 +185,7 @@ def scrape():
     forecast_df_final = forecast_df_final.drop(columns = application_cat)
 
     # Drop one of the temp columns
-    forecast_df_final = forecast_df_final[['HighTemps', 'Winds', 'Precipitation', 'Humidity', 'Conditions_Clear', 'Conditions_Overcast', 'Conditions_Partially cloudy', 'Conditions_Rain', 'Conditions_Rain,Overcast', 'Conditions_Rain, Partially cloudy', 'Conditions_Snow', 'Conditions_Snow, Overcast', 'Conditions_Snow, Partially cloudy' ]]
+   # forecast_df_final = forecast_df_final[['HighTemps', 'Winds', 'Precipitation', 'Humidity', 'Conditions_Clear', 'Conditions_Overcast', 'Conditions_Partially cloudy', 'Conditions_Rain', 'Conditions_Rain,Overcast', 'Conditions_Rain, Partially cloudy', 'Conditions_Snow', 'Conditions_Snow, Overcast', 'Conditions_Snow, Partially cloudy' ]]
     forecast_df_final['Temperature'] = forecast_df_final['HighTemps']
     forecast_df_final['wind_speed'] = forecast_df_final['Winds']
     forecast_df_final['relative_humidity'] = forecast_df_final['Humidity']
@@ -198,5 +198,5 @@ def scrape():
     forecast_df_final['Conditions_Snow, Partially cloudy'] =0
 
     #Drop Low Temps column
-    forecast_df_final = forecast_df_final[['Temperature', 'Precipitation', 'wind_speed',  'relative_humidity', 'Conditions_Clear', 'Conditions_Overcast', 'Conditions_Partially cloudy', 'Conditions_Rain', 'Conditions_Rain, Overcast', 'Conditions_Rain, Partially cloudy', 'Conditions_Snow', 'Conditions_Snow, Overcast', 'Conditions_Snow, Partially cloudy']]
+    #forecast_df_final = forecast_df_final[['Temperature', 'Precipitation', 'wind_speed',  'relative_humidity', 'Conditions_Clear', 'Conditions_Overcast', 'Conditions_Partially cloudy', 'Conditions_Rain', 'Conditions_Rain, Overcast', 'Conditions_Rain, Partially cloudy', 'Conditions_Snow', 'Conditions_Snow, Overcast', 'Conditions_Snow, Partially cloudy']]
     return forecast_df_final
