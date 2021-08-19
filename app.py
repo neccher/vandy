@@ -13,21 +13,14 @@ import tensorflow as tf
 app = Flask(__name__)
 
 
-""" model = pickle.load(open("/Users/rdcuy/Documents/VANDY_OLD/templates/weather_aqi.pkl", "wb")) """
-
 @app.route('/')
 def index():    
     return render_template('index.html')
 
-@app.route("/scraper/")
+@app.route("/scraper")
 def scraping():
     weatherdata = ScrapingWeather.scrape()
-    model = tf.keras.models.load_model("weather_aqi")
-    prediction = model.predict(weatherdata)
-    #print(prediction)
-    return render_template('index.html', prediction=prediction)
-    #return prediction
-    """  return redirect('/', code = 302) """
-    
+    return render_template('index.html', weatherdata = weatherdata.to_html(classes = 'table table-striped'))
+
 if __name__ == '__main__':
     app.run(host='localhost',debug=True)

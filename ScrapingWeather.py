@@ -8,6 +8,7 @@ from sklearn.preprocessing import StandardScaler,OneHotEncoder
 import tensorflow as tf
 import os
 from tensorflow.keras.callbacks import ModelCheckpoint
+import numpy as np
 
 def scrape():
     # Set the executable path and initialize Splinter
@@ -90,17 +91,17 @@ def scrape():
     wind_speeds.append(wind_info[14][1])
 
     # Use the parent element to find all chances of rain and save as `PrecipChances`
-    PrecipChances = weather_soup.find_all('span', class_='DailyContent--value--37sk2')
+    #PrecipChances = weather_soup.find_all('span', class_='DailyContent--value--37sk2') """
 
     #For Loop to grab all precips
-    Precips_List = []
-    for precip in PrecipChances:
-        chance = precip.get_text()
-        Precips_List.append(chance)
+    #Precips_List = []
+    #for precip in PrecipChances:
+        #chance = precip.get_text()
+        #Precips_List.append(chance)
 
-    Precips_List_Final = [(Precips_List[0]), (Precips_List[4]), (Precips_List[8]), (Precips_List[12]), (Precips_List[16]),
-                        (Precips_List[20]), (Precips_List[24]), (Precips_List[28]), (Precips_List[32]), (Precips_List[36]),
-                        (Precips_List[40]), (Precips_List[44]), (Precips_List[48]), (Precips_List[52]), (Precips_List[56])]
+    #Precips_List_Final = [(Precips_List[0]), (Precips_List[4]), (Precips_List[8]), (Precips_List[12]), (Precips_List[16]),
+                        #(Precips_List[20]), (Precips_List[24]), (Precips_List[28]), (Precips_List[32]), (Precips_List[36]),
+                        #(Precips_List[40]), (Precips_List[44]), (Precips_List[48]), (Precips_List[52]), (Precips_List[56])] """
 
 
     # Use the parent element to find all humidity readings and save as `Humidities`
@@ -129,7 +130,7 @@ def scrape():
     forecast_df['LowTemps'] = Low_Temps
     forecast_df['Conditions'] = Conditions_List
     forecast_df['Winds'] = wind_speeds
-    forecast_df['Precipitation'] = Precips_List_Final
+    #forecast_df['Precipitation'] = Precips_List_Final
     forecast_df['Humidity'] = Hums_List_Final
 
 
@@ -142,7 +143,7 @@ def scrape():
     #Removing symbols
     forecast_df['HighTemps'] = forecast_df['HighTemps'].str.rstrip("°")
     forecast_df['LowTemps'] = forecast_df['LowTemps'].str.rstrip("°")
-    forecast_df['Precipitation'] = forecast_df['Precipitation'].str.rstrip("%")
+    #forecast_df['Precipitation'] = forecast_df['Precipitation'].str.rstrip("%")
     forecast_df['Humidity'] = forecast_df['Humidity'].str.rstrip("%")
 
 
@@ -150,11 +151,11 @@ def scrape():
     forecast_df['HighTemps'] = forecast_df['HighTemps'].astype(float)
     forecast_df['LowTemps'] = forecast_df['LowTemps'].astype(float)
     forecast_df['Winds'] = forecast_df['Winds'].astype(float)
-    forecast_df['Precipitation'] = forecast_df['Precipitation'].astype(float)
+    #forecast_df['Precipitation'] = forecast_df['Precipitation'].astype(float)
     forecast_df['Humidity'] = forecast_df['Humidity'].astype(float)
 
     #Converting Precipitation to decimal
-    forecast_df['Precipitation'] = (forecast_df['Precipitation'] / 100)
+    #forecast_df['Precipitation'] = (forecast_df['Precipitation'] / 100)
 
 
     #Transforming Conditions text to match with model
@@ -201,10 +202,13 @@ def scrape():
     forecast_df_final['Conditions_Snow, Partially cloudy'] =0
 
     #Drop Low Temps column
-    forecast_df_final = forecast_df_final[['Temperature', 'Precipitation', 'wind_speed',  'relative_humidity', 'Conditions_Clear', 'Conditions_Overcast', 'Conditions_Partially cloudy', 'Conditions_Rain', 'Conditions_Rain, Overcast', 'Conditions_Rain, Partially cloudy', 'Conditions_Snow', 'Conditions_Snow, Overcast', 'Conditions_Snow, Partially cloudy']]
+    forecast_df_final = forecast_df_final[['Temperature', 'wind_speed',  'relative_humidity', 'Conditions_Clear', 'Conditions_Overcast', 'Conditions_Partially cloudy', 'Conditions_Rain', 'Conditions_Rain, Overcast', 'Conditions_Rain, Partially cloudy', 'Conditions_Snow', 'Conditions_Snow, Overcast', 'Conditions_Snow, Partially cloudy']]
     
-    return forecast_df_final
+    model = tf.keras.models.load_model("weather_aqi")
+    prediction = model.predict(forecast_df_final)
+    print (prediction)
 
-    #model = tf.keras.models.load_model("weather_aqi")
-   #prediction = model.predict(forecast_df_final)
-   #print(prediction)
+    forecast_df_final['AQI Prediction'] = np.array(prediction)
+
+    forecast_df_final = forecast_df_final.drop(columns=['Conditions_Overcast', 'Conditions_Rain, Overcast', 'Conditions_Rain, Partially cloudy', 'Conditions_Snow', 'Conditions_Snow, Overcast', 'Conditions_Snow, Partially cloudy'])
+    return forecast_df_final
