@@ -11,7 +11,7 @@ import tensorflow as tf
 
 
 app = Flask(__name__)
-model = tf.keras.models.load_model("weather_aqi.pkl", "rb")
+
 
 """ model = pickle.load(open("/Users/rdcuy/Documents/VANDY_OLD/templates/weather_aqi.pkl", "wb")) """
 
@@ -19,12 +19,14 @@ model = tf.keras.models.load_model("weather_aqi.pkl", "rb")
 def index():    
     return render_template('index.html')
 
-@app.route("/scrape")
-def scrape():
-    weather_data = ScrapingWeather.scrape()
-    prediction = model.predict([np.array(list(weather_data.values()))])
-    output = prediction[0]
-    return jsonify(output)
+@app.route("/scraper")
+def scraping():
+    weatherdata = ScrapingWeather.scrape()
+    model = tf.keras.models.load_model("weather_aqi")
+    prediction = model.predict(weatherdata)
+    print(prediction)
+    
+    return prediction
     """  return redirect('/', code = 302) """
     
 if __name__ == '__main__':

@@ -5,6 +5,9 @@ from bs4 import BeautifulSoup as soup
 import pandas as pd
 from webdriver_manager.chrome import ChromeDriverManager
 from sklearn.preprocessing import StandardScaler,OneHotEncoder
+import tensorflow as tf
+import os
+from tensorflow.keras.callbacks import ModelCheckpoint
 
 def scrape():
     # Set the executable path and initialize Splinter
@@ -191,12 +194,17 @@ def scrape():
     forecast_df_final['relative_humidity'] = forecast_df_final['Humidity']
 
     forecast_df_final['Conditions_Overcast']=0
-    forecast_df_final['Conditions_Rain,Overcast'] =0
+    forecast_df_final['Conditions_Rain, Overcast'] =0
     forecast_df_final['Conditions_Rain, Partially cloudy']=0
     forecast_df_final['Conditions_Snow']=0
     forecast_df_final['Conditions_Snow, Overcast']=0
     forecast_df_final['Conditions_Snow, Partially cloudy'] =0
 
     #Drop Low Temps column
-    #forecast_df_final = forecast_df_final[['Temperature', 'Precipitation', 'wind_speed',  'relative_humidity', 'Conditions_Clear', 'Conditions_Overcast', 'Conditions_Partially cloudy', 'Conditions_Rain', 'Conditions_Rain, Overcast', 'Conditions_Rain, Partially cloudy', 'Conditions_Snow', 'Conditions_Snow, Overcast', 'Conditions_Snow, Partially cloudy']]
+    forecast_df_final = forecast_df_final[['Temperature', 'Precipitation', 'wind_speed',  'relative_humidity', 'Conditions_Clear', 'Conditions_Overcast', 'Conditions_Partially cloudy', 'Conditions_Rain', 'Conditions_Rain, Overcast', 'Conditions_Rain, Partially cloudy', 'Conditions_Snow', 'Conditions_Snow, Overcast', 'Conditions_Snow, Partially cloudy']]
+    
     return forecast_df_final
+
+    #model = tf.keras.models.load_model("weather_aqi")
+   #prediction = model.predict(forecast_df_final)
+   #print(prediction)
